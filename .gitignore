@@ -1,0 +1,20 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Imported translations
+*.translation
+
+# Mono / C# specific (if added in future)
+.mono/
+[Bb]in/
+[Oo]bj/
+
+# Logs and temp files
+*.log
+game_stdout.log
+game_stderr.log
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini

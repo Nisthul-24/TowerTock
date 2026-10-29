@@ -1,0 +1,103 @@
+[gd_scene load_steps=4 format=3 uid="uid://main_menu"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_main_menu"]
+[ext_resource type="Script" path="res://scripts/city_background.gd" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/theme_selector.tscn" id="3_ts"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_main_menu")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="Background" type="Node2D" parent="BackgroundLayer"]
+script = ExtResource("2_bg")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="VBox" type="VBoxContainer" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_right = -60.0
+offset_top = 220.0
+offset_bottom = -260.0
+alignment = 1
+
+[node name="LogoLabel" type="Label" parent="UI/VBox"]
+layout_mode = 2
+text = "TowerTock"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 96
+theme_override_colors/font_color = Color(1.0, 0.84, 0.22, 1.0)
+theme_override_colors/font_shadow_color = Color(0.04, 0.06, 0.12, 0.9)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+
+[node name="TaglineLabel" type="Label" parent="UI/VBox"]
+layout_mode = 2
+text = "Stack. Build. Conquer."
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.75, 0.88, 1.0, 0.95)
+
+[node name="Spacer1" type="Control" parent="UI/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+
+[node name="PlayButton" type="Button" parent="UI/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 110)
+text = "PLAY"
+theme_override_font_sizes/font_size = 48
+
+[node name="ThemesButton" type="Button" parent="UI/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 85)
+text = "🎨 THEMES"
+theme_override_font_sizes/font_size = 32
+
+[node name="Spacer2" type="Control" parent="UI/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 30)
+
+[node name="HighScoreLabel" type="Label" parent="UI/VBox"]
+layout_mode = 2
+text = "Best: 0"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(0.9, 0.92, 0.95, 0.9)
+
+[node name="BottomBar" type="HBoxContainer" parent="UI"]
+anchor_left = 0.0
+anchor_right = 1.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_right = -40.0
+offset_top = -140.0
+offset_bottom = -50.0
+alignment = 1
+
+[node name="MusicToggle" type="Button" parent="UI/BottomBar"]
+layout_mode = 2
+custom_minimum_size = Vector2(190, 68)
+text = "Music ON"
+theme_override_font_sizes/font_size = 24
+
+[node name="HSpacer" type="Control" parent="UI/BottomBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SfxToggle" type="Button" parent="UI/BottomBar"]
+layout_mode = 2
+custom_minimum_size = Vector2(190, 68)
+text = "SFX ON"
+theme_override_font_sizes/font_size = 24
+
+[node name="ThemeSelector" parent="." instance=ExtResource("3_ts")]
+
+[connection signal="pressed" from="UI/VBox/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="UI/VBox/ThemesButton" to="." method="_on_themes_button_pressed"]
+[connection signal="pressed" from="UI/BottomBar/MusicToggle" to="." method="_on_music_toggle_pressed"]
+[connection signal="pressed" from="UI/BottomBar/SfxToggle" to="." method="_on_sfx_toggle_pressed"]

@@ -1,0 +1,381 @@
+[gd_scene load_steps=11 format=3 uid="uid://game_scene"]
+
+[ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_gc"]
+[ext_resource type="Script" path="res://scripts/city_background.gd" id="2_bg"]
+[ext_resource type="Script" path="res://scripts/crane_controller.gd" id="3_crane"]
+[ext_resource type="Script" path="res://scripts/stacking_controller.gd" id="4_stack"]
+[ext_resource type="Script" path="res://scripts/camera_controller.gd" id="5_cam"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="6_hud"]
+[ext_resource type="Script" path="res://scripts/game_over_screen.gd" id="7_gameover"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="8_pause"]
+[ext_resource type="Script" path="res://scripts/stability_controller.gd" id="9_stab"]
+[ext_resource type="PackedScene" path="res://scenes/theme_selector.tscn" id="10_ts"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_gc")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="Background" type="Node2D" parent="BackgroundLayer"]
+script = ExtResource("2_bg")
+
+[node name="TowerRoot" type="Node2D" parent="."]
+
+[node name="Platform" type="Node2D" parent="."]
+position = Vector2(540, 1620)
+
+[node name="FoundationLegs" type="ColorRect" parent="Platform"]
+position = Vector2(-160, 50)
+size = Vector2(320, 270)
+color = Color(0.12, 0.14, 0.18, 1.0)
+
+[node name="PlatformBase" type="ColorRect" parent="Platform"]
+position = Vector2(-180, -20)
+size = Vector2(360, 80)
+color = Color(0.18, 0.22, 0.28, 1.0)
+
+[node name="PlatformTop" type="ColorRect" parent="Platform"]
+position = Vector2(-170, -20)
+size = Vector2(340, 10)
+color = Color(0.72, 0.78, 0.85, 1.0)
+
+[node name="GirderLeft" type="ColorRect" parent="Platform"]
+position = Vector2(-190, -35)
+size = Vector2(24, 75)
+color = Color(0.32, 0.36, 0.42, 1.0)
+
+[node name="GirderRight" type="ColorRect" parent="Platform"]
+position = Vector2(166, -35)
+size = Vector2(24, 75)
+color = Color(0.32, 0.36, 0.42, 1.0)
+
+[node name="StackingController" type="Node" parent="."]
+script = ExtResource("4_stack")
+platform_center_x = 540.0
+platform_width = 340.0
+platform_top_y = 1600.0
+building_width = 220.0
+building_height = 100.0
+landing_tolerance = 18.0
+
+[node name="StabilityController" type="Node" parent="."]
+script = ExtResource("9_stab")
+
+[node name="Crane" type="Node2D" parent="."]
+position = Vector2(540, 240)
+script = ExtResource("3_crane")
+rail_left = -360.0
+rail_right = 360.0
+
+[node name="CraneBoomTruss" type="ColorRect" parent="Crane"]
+position = Vector2(-420, -14)
+size = Vector2(840, 28)
+color = Color(0.92, 0.72, 0.14, 1.0)
+
+[node name="BoomInnerLattice" type="ColorRect" parent="Crane"]
+position = Vector2(-414, -10)
+size = Vector2(828, 20)
+color = Color(0.16, 0.18, 0.22, 1.0)
+
+[node name="CraneRailSteel" type="ColorRect" parent="Crane"]
+position = Vector2(-420, -18)
+size = Vector2(840, 5)
+color = Color(0.88, 0.90, 0.96, 1.0)
+
+[node name="RailEndLeft" type="ColorRect" parent="Crane"]
+position = Vector2(-432, -36)
+size = Vector2(16, 68)
+color = Color(0.88, 0.25, 0.22, 1.0)
+
+[node name="BumperPadLeft" type="ColorRect" parent="Crane"]
+position = Vector2(-416, -24)
+size = Vector2(12, 44)
+color = Color(0.12, 0.12, 0.15, 1.0)
+
+[node name="RailEndRight" type="ColorRect" parent="Crane"]
+position = Vector2(416, -36)
+size = Vector2(16, 68)
+color = Color(0.88, 0.25, 0.22, 1.0)
+
+[node name="BumperPadRight" type="ColorRect" parent="Crane"]
+position = Vector2(404, -24)
+size = Vector2(12, 44)
+color = Color(0.12, 0.12, 0.15, 1.0)
+
+[node name="Carriage" type="Node2D" parent="Crane"]
+
+[node name="CarriageBody" type="ColorRect" parent="Crane/Carriage"]
+position = Vector2(-40, -10)
+size = Vector2(80, 32)
+color = Color(0.94, 0.74, 0.16, 1.0)
+
+[node name="CarriageInner" type="ColorRect" parent="Crane/Carriage"]
+position = Vector2(-34, -6)
+size = Vector2(68, 24)
+color = Color(0.15, 0.17, 0.22, 1.0)
+
+[node name="WinchDrum" type="ColorRect" parent="Crane/Carriage"]
+position = Vector2(-22, -2)
+size = Vector2(44, 16)
+color = Color(0.42, 0.46, 0.52, 1.0)
+
+[node name="WinchCoil" type="ColorRect" parent="Crane/Carriage"]
+position = Vector2(-18, 1)
+size = Vector2(36, 10)
+color = Color(0.72, 0.75, 0.82, 1.0)
+
+[node name="WheelL" type="ColorRect" parent="Crane/Carriage"]
+position = Vector2(-34, -22)
+size = Vector2(22, 12)
+color = Color(0.82, 0.84, 0.88, 1.0)
+
+[node name="WheelR" type="ColorRect" parent="Crane/Carriage"]
+position = Vector2(12, -22)
+size = Vector2(22, 12)
+color = Color(0.82, 0.84, 0.88, 1.0)
+
+[node name="GuideRoller" type="ColorRect" parent="Crane/Carriage"]
+position = Vector2(-8, 18)
+size = Vector2(16, 6)
+color = Color(0.60, 0.64, 0.70, 1.0)
+
+[node name="AttachmentPoint" type="Marker2D" parent="Crane/Carriage"]
+position = Vector2(0, 22)
+
+[node name="CableLine" type="Line2D" parent="Crane"]
+width = 3.5
+default_color = Color(0.85, 0.88, 0.94, 0.95)
+antialiased = true
+
+[node name="GameCamera" type="Camera2D" parent="."]
+position = Vector2(540, 960)
+script = ExtResource("5_cam")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("6_hud")
+
+[node name="PauseButton" type="Button" parent="HUD"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 96.0
+offset_bottom = 96.0
+text = "⏸"
+theme_override_font_sizes/font_size = 36
+
+[node name="ScorePanel" type="PanelContainer" parent="HUD"]
+offset_left = 110.0
+offset_top = 20.0
+offset_right = 286.0
+offset_bottom = 96.0
+
+[node name="ScoreLabel" type="Label" parent="HUD/ScorePanel"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 38
+theme_override_colors/font_color = Color(1.0, 0.88, 0.25, 1.0)
+
+[node name="ComboLabel" type="Label" parent="HUD"]
+offset_left = 780.0
+offset_top = 108.0
+offset_right = 1056.0
+offset_bottom = 160.0
+text = "COMBO x2"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible = false
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(1.0, 0.75, 0.2, 1.0)
+
+[node name="LivesContainer" type="HBoxContainer" parent="HUD"]
+offset_left = 840.0
+offset_top = 20.0
+offset_right = 1056.0
+offset_bottom = 96.0
+
+[node name="LivesLabel" type="Label" parent="HUD/LivesContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "♥ ♥ ♥"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 34
+theme_override_colors/font_color = Color(1.0, 0.35, 0.40, 1.0)
+
+[node name="NotificationLabel" type="Label" parent="HUD"]
+anchor_left = 0.0
+anchor_right = 1.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -36.0
+offset_bottom = 36.0
+text = ""
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1.0, 0.85, 0.2, 1.0)
+modulate = Color(1, 1, 1, 0)
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("8_pause")
+visible = false
+
+[node name="Dimmer" type="ColorRect" parent="PauseMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.04, 0.06, 0.10, 0.75)
+
+[node name="Panel" type="PanelContainer" parent="PauseMenu"]
+anchor_left = 0.15
+anchor_right = 0.85
+anchor_top = 0.22
+anchor_bottom = 0.78
+
+[node name="VBox" type="VBoxContainer" parent="PauseMenu/Panel"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="PauseTitle" type="Label" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+text = "PAUSED"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 48
+theme_override_colors/font_color = Color(1.0, 0.88, 0.25, 1.0)
+
+[node name="Spacer" type="Control" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 10)
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+text = "Resume"
+theme_override_font_sizes/font_size = 28
+
+[node name="SoundRow" type="HBoxContainer" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="MusicToggle" type="Button" parent="PauseMenu/Panel/VBox/SoundRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 52)
+text = "Music ON"
+theme_override_font_sizes/font_size = 20
+
+[node name="SfxToggle" type="Button" parent="PauseMenu/Panel/VBox/SoundRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 52)
+text = "SFX ON"
+theme_override_font_sizes/font_size = 20
+
+[node name="RestartButton" type="Button" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+text = "Restart"
+theme_override_font_sizes/font_size = 28
+
+[node name="MainMenuButton" type="Button" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+text = "Main Menu"
+theme_override_font_sizes/font_size = 28
+
+[node name="GameOverScreen" type="CanvasLayer" parent="."]
+script = ExtResource("7_gameover")
+visible = false
+
+[node name="Dimmer" type="ColorRect" parent="GameOverScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.04, 0.06, 0.10, 0.82)
+
+[node name="Panel" type="PanelContainer" parent="GameOverScreen"]
+anchor_left = 0.1
+anchor_right = 0.9
+anchor_top = 0.18
+anchor_bottom = 0.82
+
+[node name="VBox" type="VBoxContainer" parent="GameOverScreen/Panel"]
+layout_mode = 2
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="GameOverScreen/Panel/VBox"]
+layout_mode = 2
+text = "GAME OVER"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 56
+theme_override_colors/font_color = Color(1.0, 0.35, 0.38, 1.0)
+
+[node name="ScoreLabel" type="Label" parent="GameOverScreen/Panel/VBox"]
+layout_mode = 2
+text = "Score: 0"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 44
+theme_override_colors/font_color = Color(1.0, 0.88, 0.25, 1.0)
+
+[node name="HighScoreLabel" type="Label" parent="GameOverScreen/Panel/VBox"]
+layout_mode = 2
+text = "Best: 0"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(0.85, 0.92, 1.0, 0.9)
+
+[node name="FloorsLabel" type="Label" parent="GameOverScreen/Panel/VBox"]
+layout_mode = 2
+text = "Height: 0 Floors"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.70, 0.85, 1.0, 0.9)
+
+[node name="Spacer" type="Control" parent="GameOverScreen/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 15)
+
+[node name="ReviveButton" type="Button" parent="GameOverScreen/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 70)
+text = "Watch Ad to Continue"
+theme_override_font_sizes/font_size = 28
+
+[node name="RestartButton" type="Button" parent="GameOverScreen/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 65)
+text = "Play Again"
+theme_override_font_sizes/font_size = 28
+
+[node name="ThemeButton" type="Button" parent="GameOverScreen/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+text = "🎨 Choose City Theme"
+theme_override_font_sizes/font_size = 24
+
+[node name="MenuButton" type="Button" parent="GameOverScreen/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+text = "Main Menu"
+theme_override_font_sizes/font_size = 26
+
+[node name="ThemeSelector" parent="." instance=ExtResource("10_ts")]
+
+[connection signal="pressed" from="HUD/PauseButton" to="HUD" method="_on_pause_button_pressed"]
+[connection signal="pause_pressed" from="HUD" to="." method="on_pause_button_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/VBox/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/VBox/RestartButton" to="PauseMenu" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/VBox/MainMenuButton" to="PauseMenu" method="_on_main_menu_button_pressed"]
+[connection signal="resume_pressed" from="PauseMenu" to="." method="on_resume_pressed"]
+[connection signal="restart_pressed" from="PauseMenu" to="." method="on_restart_pressed"]
+[connection signal="main_menu_pressed" from="PauseMenu" to="." method="on_main_menu_pressed"]
+[connection signal="pressed" from="GameOverScreen/Panel/VBox/ReviveButton" to="GameOverScreen" method="_on_revive_button_pressed"]
+[connection signal="pressed" from="GameOverScreen/Panel/VBox/RestartButton" to="GameOverScreen" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="GameOverScreen/Panel/VBox/ThemeButton" to="GameOverScreen" method="_on_theme_button_pressed"]
+[connection signal="pressed" from="GameOverScreen/Panel/VBox/MenuButton" to="GameOverScreen" method="_on_main_menu_button_pressed"]
+[connection signal="revive_requested" from="GameOverScreen" to="." method="request_revive"]
+[connection signal="restart_requested" from="GameOverScreen" to="." method="on_restart_pressed"]
+[connection signal="main_menu_requested" from="GameOverScreen" to="." method="on_main_menu_pressed"]
+[connection signal="theme_picker_requested" from="GameOverScreen" to="." method="_on_theme_picker_requested"]
